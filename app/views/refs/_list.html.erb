@@ -1,0 +1,8 @@
+<h1><%= @concept.name %></h1>
+<%= link_to "new", new_concept_ref_path(@concept), class: "small button", remote: true%>
+<div id="ref-form"></div>
+<div id="refs">
+   <% @concept.refs.each do |ref| %>
+      <%= render partial: 'ref', locals: {ref: ref}%>
+   <% end %>
+</div>

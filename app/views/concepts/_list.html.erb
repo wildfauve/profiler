@@ -1,0 +1,24 @@
+<%= link_to "new", new_concept_path, class: "button" %>
+<table class="table">
+   <thead>
+     <tr>
+       <th>Name</th>
+       <th>Description</th>
+       <th>Actions</th>
+     </tr>
+   </thead>
+   <tbody>
+      <% @concepts.each do |concept| %>
+         <tr>
+            <td>
+               <%= concept.name %>
+            </td>
+            <td><%= concept.description %></td>
+            <td>
+               <%= link_to "Edit",  edit_concept_path(concept), class: "tiny button"%>               
+               <%= link_to "Refs",  concept_refs_path(concept), class: "tiny button"%>               
+            </td>
+         </tr>
+      <% end %>
+   </tbody>
+</table>

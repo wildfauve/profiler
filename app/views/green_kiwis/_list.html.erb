@@ -1,0 +1,27 @@
+<table class="table">
+   <thead>
+     <tr>
+       <th>Kiwi URL</th>
+       <th>Profile Items</th>
+       <th>Actions</th>      
+     </tr>
+   </thead>
+   <tbody>
+      <% @green.each do |green|%>
+         <tr>
+            <td>
+               <%= link_to green.kiwi_url, green_kiwi_path(green)%>
+            </td>
+            <td>
+               <% green.profile_items.each do |item| %>
+                  <p><%= item.id_attribute.display_name %>: <%= item.entry%></p>
+               <% end %>
+               
+            </td>
+            <td>
+               <%= link_to "Edit",  edit_green_kiwi_path(green), class: "tiny button"%>               
+            </td>
+         </tr>
+      <% end %>
+   </tbody>
+</table>

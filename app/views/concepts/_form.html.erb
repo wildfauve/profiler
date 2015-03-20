@@ -1,0 +1,25 @@
+<%= form_for(@concept, html: { class: "custom"}) do |f| %>
+   <div class="row">
+     <div class="small-2 columns">
+       <%= f.label :name, class: "right inline"%>
+     </div>
+     <div class="small-10 columns">
+       <%= f.text_field :name, placeholder: "Name" %>
+     </div> 
+   </div>
+   
+   
+   <div class="row">
+     <div class="small-2 columns">
+       <%= f.label :description, class: "right inline" %>
+     </div>
+     <div class="small-10 columns">
+       <%= f.text_field :description, placeholder: "Description" %>
+     </div> 
+   </div>
+   <div class="row">
+     <div class="small-10 small-offset-2 columns">
+       <%= f.submit 'Submit', :class => 'button small' %>
+     </div>
+   </div>
+<% end %>

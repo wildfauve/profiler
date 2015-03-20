@@ -1,0 +1,13 @@
+<%= form_for([@concept, @ref], html: { class: "custom"}, remote: true) do |f| %>
+   <div class="row">
+     <div class="small-2 columns">
+       <%= f.label :name, class: "right inline"%>
+     </div>
+     <div class="small-6 columns">
+       <%= f.text_field :name, placeholder: "Name" %>
+     </div> 
+     <div class="small-4 columns">
+       <%= f.submit 'Submit', :class => 'button tiny' %>
+     </div>     
+   </div>
+<% end %>

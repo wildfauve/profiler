@@ -1,0 +1,70 @@
+<%= form_for(@id_attr, html: { class: "custom"}) do |f| %>
+   <div class="row">
+     <div class="small-2 columns">
+       <%= f.label :name, class: "right inline"%>
+     </div>
+     <div class="small-10 columns">
+       <%= f.text_field :name, placeholder: "Attribute id" %>
+     </div> 
+   </div>
+   
+   <div class="row">
+     <div class="small-2 columns">
+       <%= f.label :display_name, class: "right inline"%>
+     </div>
+     <div class="small-10 columns">
+       <%= f.text_field :display_name, placeholder: "Attribute Display Name" %>
+     </div> 
+   </div>
+
+   <div class="row">
+     <div class="small-2 columns">
+       <%= f.label :type, class: "right inline"%>
+     </div>
+     <div class="small-10 columns">
+        <%= f.select(:type, options_for_select(type_select, @id_attr.type), :include_blank => true, :prompt => "Define Type", :class => "medium") %>
+
+     </div> 
+   </div>
+
+   <div class="row">
+     <div class="small-2 columns">
+       <%= f.label :concept, class: "right inline"%>
+     </div>
+     <div class="small-10 columns">
+        <%= f.select(:concept, options_for_select(concept_select, @id_attr.concept), :include_blank => true, :prompt => "For select types, which concept is used", :class => "medium") %>
+
+     </div> 
+   </div>
+
+   
+   <div class="row">
+     <div class="small-2 columns">
+       <%= f.label :description, class: "right inline" %>
+     </div>
+     <div class="small-10 columns">
+       <%= f.text_field :description, placeholder: "Description" %>
+     </div> 
+   </div>
+   <div class="row">
+      <div class="small-2 columns">
+        <%= f.label :extender, class: "right inline" %>
+      </div>
+      <div class="small-10 columns"> 
+         <%= f.select(:extender, options_for_select(profile_extender_select, @id_attr.extender), :include_blank => true, :prompt => "Add an Extender", :class => "medium") %>
+      </div>
+   </div>
+   <div class="row">
+     <div class="small-2 columns">
+       <%= f.label :base, class: "right inline" %>
+     </div>
+     <div class="small-10 columns">
+       <%= f.check_box :base, placeholder: "Part of Base ID Profile" %>
+     </div> 
+   </div>   
+   <div class="row">
+     <div class="small-10 small-offset-2 columns">
+       <%= f.submit 'Submit', :class => 'button small' %>
+     </div>
+   </div>
+<% end %>

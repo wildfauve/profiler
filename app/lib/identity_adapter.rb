@@ -35,26 +35,16 @@ class IdentityAdapter
     else
       token = IdPort.new.get_access_token(auth_code: params[:code], host: host)
       @access_token = token.access_token
-      validate_id_token()
-      @user_proxy = UserProxy.set_up_user(access_token: @access_token, id_token: @id_token)
-      if @user_proxy.requires_a_kiwi?
-        publish(:create_a_kiwi, @user_proxy)
+      @user_proxy = UserProxy.set_up_user(access_token: @access_token)
+      if @user_proxy.requires_additional_identity?
+        publish(:create_additional_identity, @user_proxy)
       else
-        @user_proxy.kiwi.check_party
+        @user_proxy.green_kiwi.check_party
         publish(:valid_authorisation, @user_proxy)
       end
     end
   end
-  
-  def validate_id_token
-    begin
-      @id_token_encoded = @access_token["id_token"]      
-      @id_token = JWT.decode(@id_token_encoded, Setting.oauth["id_token_secret"]).inject(&:merge)
-    rescue JWT::DecodeError => e
-      raise
-    end
-  end
-  
+    
   def id_token_provided?
     @id_token ? true : false
   end

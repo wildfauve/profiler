@@ -1,6 +1,6 @@
 oauth:
-  client_id: "inner_kiwi"
-  client_secret: "TYWVUbkaujh0nFxDG-oE3A"
+  client_id: "profiler"
+  client_secret: "hojfvCCiqwbeBUjktpYzlA"
   id_token_secret: "id_token_secret"
   id_service_url: "http://localhost:3013/authorise"
   id_token_service_url: "http://localhost:3013/token"
@@ -9,7 +9,7 @@ oauth:
   require_additional_identity: true  
 services:
   self:
-    host: "http://localhost:3020"
+    host: "http://localhost:3027"
   customers:
     index: "http://localhost:3021/api/parties"
     show: "http://localhost:3021/api/parties/{id}"

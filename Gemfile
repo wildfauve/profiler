@@ -32,7 +32,7 @@ gem 'railroady'
 
 gem 'faraday'
 
-gem 'jwt'
+gem 'json-jwt'
 
 gem "bunny"
 

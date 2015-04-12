@@ -7,6 +7,7 @@ class GreenKiwisController < ApplicationController
   def create
     green = GreenKiwiManager.new
     green.subscribe(self)
+    raise
     green.create_green_kiwi(green_kiwi: params[:green_kiwi], id_attrs: params[:id_attrs])
   end
   
@@ -26,7 +27,7 @@ class GreenKiwisController < ApplicationController
   end
   
   def successful_green_manager_event(green)
-    redirect_to green_kiwis_path
+    redirect_to session[:redirect_uri]
   end
 
   

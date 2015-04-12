@@ -6,10 +6,10 @@ class GreenKiwiManager
     @green_kiwi = green_kiwi if green_kiwi
   end
   
-  def create_green_kiwi(green_kiwi: nil, id_attrs: nil)
+  def create_green_kiwi(green_kiwi: nil, id_attrs: nil, user_proxy: nil)
     green = GreenKiwi.new.build_profile(profile: ProfileBuilder.new.base_green_kiwi)
     green.subscribe self
-    green.create_me(green_kiwi: green_kiwi, id_attrs: id_attrs)
+    green.create_me(green_kiwi: green_kiwi, id_attrs: id_attrs, user_proxy: user_proxy)
   end
 
   def update_green_kiwi(green_kiwi: nil, id_attrs: nil)
@@ -18,11 +18,12 @@ class GreenKiwiManager
   end
 
   
-  def build_green_kiwi(green: nil)
+  def build_green_kiwi(green: nil, persist: false, user_proxy: nil, id_token: nil)
+    user_proxy.compare_tokens(external_token: id_token) if id_token
     if green
-      green.build_profile(profile: ProfileBuilder.new.base_green_kiwi)      
+      green.build_profile(profile: ProfileBuilder.new.base_green_kiwi, user_proxy: user_proxy)      
     else
-      GreenKiwi.new.build_profile(profile: ProfileBuilder.new.base_green_kiwi)
+      GreenKiwi.new.build_profile(profile: ProfileBuilder.new.base_green_kiwi, persist: persist, user_proxy: user_proxy)
     end
   end
   

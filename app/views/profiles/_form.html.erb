@@ -1,0 +1,37 @@
+<%= form_for(@green, html: { class: "custom"}) do |f| %>
+   <div class="row">
+     <div class="small-2 columns">
+       <%= f.label :kiwi_url, class: "right inline"%>
+     </div>
+     <div class="small-10 columns">
+       <%= f.text_field :kiwi_url, placeholder: "Kiwi Url" %>
+     </div> 
+   </div>
+   
+   <% @green.profile_items.each do |item|%>
+      <div class="row">
+         <div class="small-2 columns">
+            <%= label_tag item, item.id_attribute.display_name , class: "right inline" %>
+         </div>
+         <div class="small-10 columns"> 
+            <% if item.id_attribute.type == :long_text%>
+               <%= text_area_tag("id_attrs[#{item.id_attribute.id}]", item.entry , size: "10x30")%>      
+            <% elsif item.id_attribute.type == :text  %>
+               <%= text_field_tag("id_attrs[#{item.id_attribute.id}]", item.entry)%> 
+            <% elsif item.id_attribute.type == :select  %>
+               <%= select_tag("id_attrs[#{item.id_attribute.id}]", options_for_select(ref_select(item.id_attribute), item.entry_id ), :include_blank => true, :prompt => "Select #{item.id_attribute.display_name}", :class => "medium") %>
+
+            <% else %>     
+            
+            <% end %>               
+         </div>
+      </div>
+   <% end %>
+   
+   
+   <div class="row">
+     <div class="small-10 small-offset-2 columns">
+       <%= f.submit 'Submit', :class => 'button small' %>
+     </div>
+   </div>
+<% end %>

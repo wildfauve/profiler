@@ -30,7 +30,7 @@ class EventHandler
   #end
   
   def self.valid_authorisation(user_proxy)
-    self.publish(exchange: "events", message: user_proxy.kiwi.id_kiwi_event)
+    #self.publish(exchange: "events", message: user_proxy.kiwi.id_kiwi_event)
   end
     
 end

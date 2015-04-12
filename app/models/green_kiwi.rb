@@ -9,9 +9,11 @@ class GreenKiwi
   
   embeds_many :profile_items
   
+  has_one :user_proxy, autosave: true
   
-  def create_me(green_kiwi: nil, id_attrs: nil)
-    self.update_attrs(green_kiwi: green_kiwi, id_attrs: id_attrs)
+  
+  def create_me(green_kiwi: nil, id_attrs: nil, user_proxy: nil)
+    self.update_attrs(green_kiwi: green_kiwi, id_attrs: id_attrs, user_proxy: user_proxy)
     self.save
     publish(:successful_green_kiwi_create_event, self)
   end
@@ -23,17 +25,19 @@ class GreenKiwi
   end
   
   
-  def update_attrs(green_kiwi: green_kiwi, id_attrs: id_attrs)
+  def update_attrs(green_kiwi: green_kiwi, id_attrs: id_attrs, user_proxy: nil)
+    self.user_proxy = user_proxy if self.user_proxy != user_proxy || !user_proxy.nil?
     self.kiwi_url = green_kiwi[:kiwi_url]
     add_profile_entries(id_attrs: id_attrs)
     
   end
   
-  def build_profile(profile: nil, persist: false)
+  def build_profile(profile: nil, persist: false, user_proxy: nil)
     profile.each do |id_attr|
       self.add_profile_item(id_attr: id_attr)
     end
-    self.save if persist
+    self.user_proxy = user_proxy if (self.user_proxy != user_proxy) && !user_proxy.nil?
+    self.save if persist && self.changed?
     self
   end
     
@@ -50,6 +54,20 @@ class GreenKiwi
       else
         raise
       end
+    end
+  end
+  
+  def check_party #check whether this is necessary for the profile to check customer.
+    return
+    resp = CustomerPort.new.get_customer(party_url: self.party_url)
+    if resp.status == :ok
+      self.create_links(party: resp.party)
+      self.name = resp.party["party"]["name"] if self.name != resp.party["party"]["name"]
+      self.age = resp.party["party"]["age"] if self.age != resp.party["party"]["age"]
+      self.save
+    elsif resp.status == :not_found
+      self.create_links(party: create_party())
+    elsif resp.status == :unavailable
     end
   end
   

@@ -7,9 +7,21 @@ Rails.application.routes.draw do
   
   resources :green_kiwis
   
+  resources :profiles
+  
   resources :concepts do
     resources :refs
   end
+  
+  resources :identities, only: [:index] do
+    collection do
+      get 'sign_up'
+      get 'login'
+      get 'authorisation'
+      put 'logout'
+    end
+  end
+
   
 
 end
